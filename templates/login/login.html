@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ value }}</title>
+</head>
+<body>
+
+<h1>{{ value }}页面</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p class="login">
+        <input type="text" name="username" placeholder="输入用户名或者邮箱">
+    </p>
+    <p class="login">
+        <input type="text" name="password" placeholder="输入密码">
+    </p>
+    <input type="submit" value="{{ value }}">
+</form>
+</body>
+</html>

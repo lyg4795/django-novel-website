@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ name }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'my/css/index.css' %}">
+</head>
+<body>
+<div class="img">
+    <img src="{% static img %}">
+</div>
+<div class="detail">
+    <h1>
+        {{ name }}
+    </h1>
+    <div class="author">
+        {{ author }}
+    </div>
+    <br>
+    <div class="description">
+        {{ describe }}
+    </div>
+</div>
+<div class="lists">
+    {% for a,index in test%}
+        <div class="chapter">
+            <a href="{{ a }}">
+                {{ index }}
+            </a>
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>

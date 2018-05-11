@@ -1,0 +1,69 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>主页</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+{#    <link rel="stylesheet" type="text/css" href={% static 'my/css/main.css' %}>#}
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'my/css/delete_record.js' %}"></script>
+</head>
+<body>
+<div class="container">
+<div class="row">
+    {% if username %}
+    <div class="col-md-3 col-md-offset-11">
+        <a href="">首页</a>
+        <a href="">{{ username }}</a>
+        <a href="logout">登出</a>
+    </div>
+    {% else %}
+    <div class="col-md-3 col-md-offset-11">
+        <a href="" >首页</a>
+        <a href="login">登录</a>
+        <a href="registe">注册</a>
+    </div>
+    {% endif %}
+</div>
+</div>
+<br>
+<br>
+<form role="form">
+    {% csrf_token %}
+    <div class="col-md-offset-5">
+        <input type="text" name="search"  style="width: 200px;height:30px">
+        <input type="submit" value="搜"  style="width: 30px ; height: 30px">
+    </div>
+</form>
+<br>
+<br>
+{#<div class="pull-left col-md-offset-1">#}
+{#    test#}
+{#</div>#}
+{% for book in books %}
+    <div class="col-md-offset-4" style="width: 480px;">
+    <div class="pull-left" >
+    <a target="_blank" href='{{ book.name }}'>
+        <img  src="{% static book.img %}" alt="Ballade" width="140" height="140">
+    </a>
+    </div>
+    </div>
+{% endfor %}
+<div class="col-md-offset-10" id="record">
+    阅读记录
+    {% for r in readed %}
+        <div class="r" style="height: 20px">
+        <a href="{{ r.name }}">
+            {{ r.name   }}
+        </a>
+        </div>
+    {% endfor %}
+    <br>
+    <button id="delete">
+        删除记录
+    </button>
+</div>
+</body>
+</html>

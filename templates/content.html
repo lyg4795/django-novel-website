@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ chapter }}</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="col-md-11">
+    {% for foo in content %}
+        <br> {{ foo }}
+    {% endfor %}
+
+</div>
+<div class="clearfix"></div>
+<div class="col-md-2">
+    <a href="{{ above }}">
+        上一章
+    </a>
+    <a href="{{ index }}">
+        目录
+    </a>
+    <a href="{{ next }}">
+        下一章
+    </a>
+</div>
+</body>
+</html>

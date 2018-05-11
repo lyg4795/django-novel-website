@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ value }}</title>
+</head>
+<body>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+        <p class="fieldWrapper">
+            {{ field.label_tag }}{{ field }}
+            {{ field.errors }}
+        </p>
+    {% endfor %}
+
+    <input type="submit" value="{{ value }}">
+</form>
+</body>
+</html>

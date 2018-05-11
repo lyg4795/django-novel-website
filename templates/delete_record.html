@@ -1,0 +1,13 @@
+
+    阅读记录
+    {% for r in readed %}
+        <div class="r" style="height: 20px">
+        <a href="{{ r.name }}">
+            {{ r.name   }}
+        </a>
+        </div>
+    {% endfor %}
+    <br>
+    <button id="delete">
+        删除记录
+    </button>
