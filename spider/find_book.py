@@ -67,6 +67,18 @@ def find_book(books):
             # f.write(str(len(lists)))
         bookget = book.objects.filter(name=bookname)
         authorget=author_model.objects.filter(name=author)
+        if not bookget:
+            if not authorget:
+                # 存入作者
+                a=author_model.objects.create(name=author)
+                a.save()
+                authorget = author_model.objects.filter(name=author)
+            # 存入书本
+            b=book.objects.create(name=bookname,author=authorget[0],index='my/book/'+bookname+'/index',
+                                describe=intro,img='my/book/'+bookname+'/'+bookname+'.jpg')
+            b.save()
+            bookget = book.objects.filter(name=bookname)
+            print('saved')
         book_list=download.objects.filter(name=bookget[0])
         if not book_list:
             d = download.objects.create(name=bookget[0], book_list='0')
@@ -105,19 +117,9 @@ def find_book(books):
         # 存入当前的小说章节数目，作为下一次爬虫的起点
         with open(basedir + 'count.txt', 'w')as f1:
             f1.write(str(count))
-        if not bookget:
-            if not authorget:
-                # 存入作者
-                a=author_model.objects.create(name=author)
-                a.save()
-            # 存入书本
-            b=book.objects.create(name=bookname,author=authorget[0],index='my/book/'+bookname+'/index',
-                                describe=intro,img='my/book/'+bookname+'/'+bookname+'.jpg')
-            b.save()
-            print('saved')
     analyze(req)
 if __name__ == '__main__':
     books=book.objects.all()
     #for b in books:
     #    find_book(b.name)
-    find_book('黎明之剑')
+    find_book('魔鬼传奇')
