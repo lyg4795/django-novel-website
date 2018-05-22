@@ -17,4 +17,9 @@ class readed(models.Model):
         return self.name
     name=models.CharField(max_length=100)
     reader=models.ForeignKey(User,on_delete=models.CASCADE)
+class download(models.Model):
+    def __str__(self):
+        return self.name.name
+    name=models.ForeignKey(book,on_delete=models.CASCADE)
+    book_list=models.TextField()
 # Create your models here.
