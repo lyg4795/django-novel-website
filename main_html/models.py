@@ -12,6 +12,7 @@ class book(models.Model):
     describe=models.TextField()
     index=models.CharField(max_length=100)
     img=models.CharField(max_length=100,default='')
+    count=models.CharField(max_length=20,default='0')
 class readed(models.Model):
     def __str__(self):
         return self.name

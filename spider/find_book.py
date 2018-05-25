@@ -51,11 +51,11 @@ def find_book(books):
         except Exception as e:
             print(e)
         # 用于统计之前爬到了小说的第几个章节，用count计数
-        try:
-            with open(basedir+'count.txt')as f:
-                count=int(f.readline())
-        except:
-            count=0
+        # try:
+        #     with open(basedir+'count.txt')as f:
+        #         count=int(f.readline())
+        # except:
+        #     count=0
         # 保存图片
         with open(basedir+bookname+'.jpg','wb')as f:
             f.write(imghtml.content)
@@ -76,10 +76,11 @@ def find_book(books):
                 authorget = author_model.objects.filter(name=author)
             # 存入书本
             b=book.objects.create(name=bookname,author=authorget[0],index='my/book/'+bookname+'/index',
-                                describe=intro,img='my/book/'+bookname+'/'+bookname+'.jpg')
+                                describe=intro,img='my/book/'+bookname+'/'+bookname+'.jpg',count='0')
             b.save()
             bookget = book.objects.filter(name=bookname)
             print('saved {}'.format(bookname))
+        count=int(bookget[0].count)
         book_list=download.objects.filter(name=bookget[0])
         if not book_list:
             d = download.objects.create(name=bookget[0], book_list='0')
@@ -118,9 +119,11 @@ def find_book(books):
 
         book_list[0].book_list = ','.join(url_index)
         book_list[0].save()
+        bookget[0].count=str(count)
+        bookget[0].save()
         # 存入当前的小说章节数目，作为下一次爬虫的起点
-        with open(basedir + 'count.txt', 'w')as f1:
-            f1.write(str(count))
+        # with open(basedir + 'count.txt', 'w')as f1:
+        #     f1.write(str(count))
     analyze(req)
 def update_novel():
     books = book.objects.all()
@@ -130,4 +133,4 @@ if __name__ == '__main__':
     books=book.objects.all()
     #for b in books:
     #    find_book(b.name)
-    find_book('黎明之剑')
+    find_book('永夜君王')
