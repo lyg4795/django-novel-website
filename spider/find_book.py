@@ -3,6 +3,7 @@ import requests
 from urllib.parse import quote
 import scrapy
 import json
+import time
 # 设置django环境，不然无法用model的方法将数据存入到数据库，会报错
 # django.core.exceptions.AppRegistryNotReady: Apps aren't loaded yet.
 import os,sys,django
@@ -78,7 +79,7 @@ def find_book(books):
                                 describe=intro,img='my/book/'+bookname+'/'+bookname+'.jpg')
             b.save()
             bookget = book.objects.filter(name=bookname)
-            print('saved')
+            print('saved {}'.format(bookname))
         book_list=download.objects.filter(name=bookget[0])
         if not book_list:
             d = download.objects.create(name=bookget[0], book_list='0')
@@ -92,6 +93,7 @@ def find_book(books):
         try:
             for li in lists[count+9:]:
                 if not li in url_index:
+                    time.sleep(0.5)
                     if len(url_index)<15:
                         url_index.append(li)
                     else:
@@ -108,18 +110,23 @@ def find_book(books):
                         f.write(chapter_content)
                     count+=1
                     print(count)
-            book_list[0].book_list=','.join(url_index)
-            book_list[0].save()
 
         except Exception as e:
             with open(basedir + 'info.txt', 'a')as f:
                 f.write(str(e))
+
+        book_list[0].book_list = ','.join(url_index)
+        book_list[0].save()
         # 存入当前的小说章节数目，作为下一次爬虫的起点
         with open(basedir + 'count.txt', 'w')as f1:
             f1.write(str(count))
     analyze(req)
+def update_novel():
+    books = book.objects.all()
+    for b in books:
+       find_book(b.name)
 if __name__ == '__main__':
     books=book.objects.all()
     #for b in books:
     #    find_book(b.name)
-    find_book('魔鬼传奇')
+    find_book('黎明之剑')

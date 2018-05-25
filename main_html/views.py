@@ -54,7 +54,7 @@ def content(req,content,slug):
         readed=f.readlines()
     number=int(slug[:-4])
     context={
-        'content':readed[0].split('　　'),
+        'content':readed,
         'chapter':chapter,
         'next':str(number+1)+'.txt',
         'above':str(number-1)+'.txt',
