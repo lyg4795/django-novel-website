@@ -85,6 +85,7 @@ def find_book(books):
             d = download.objects.create(name=bookget[0], book_list='0')
             d.save()
             url_index=[]
+            book_list = download.objects.filter(name=bookget[0])
         else:
             url_index=book_list[0].book_list.split(',')
 
