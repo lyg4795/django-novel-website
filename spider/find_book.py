@@ -109,6 +109,8 @@ def find_book(books):
                     chapter_content=selector.xpath('//div[@id="content"]').xpath('string(.)').extract_first()
                     with open(basedir+'index/'+str(count)+'.txt','w')as f:
                         f.write(chapter_name+'\n')
+                        if chapter_content is None:
+                            chapter_content=''
                         f.write(chapter_content)
                     count+=1
                     print(count)
@@ -116,7 +118,8 @@ def find_book(books):
         except Exception as e:
             with open(basedir + 'info.txt', 'a')as f:
                 f.write(str(e))
-
+            bookget[0].count = str(count)
+            bookget[0].save()
         book_list[0].book_list = ','.join(url_index)
         book_list[0].save()
         bookget[0].count=str(count)
