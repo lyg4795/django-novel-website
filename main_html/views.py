@@ -49,9 +49,12 @@ def index(req,slug):
                   )
 def content(req,content,slug):
     basedir = os.path.dirname(__file__)+'/static/my/book/'+content+'/index/'+slug
+    readed=[]
     with open(basedir)as f:
         chapter=f.readline()
-        readed=f.readlines()
+        for r in f.readlines():
+            for s in r.split('　　'):
+                readed.append('　　'+s)
     number=int(slug[:-4])
     context={
         'content':readed,
