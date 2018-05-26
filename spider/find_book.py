@@ -49,13 +49,6 @@ def find_book(books):
             os.makedirs(basedir+'index')
         except Exception as e:
             print(e)
-        # 用于统计之前爬到了小说的第几个章节，用count计数
-        # try:
-        #     with open(basedir+'count.txt')as f:
-        #         count=int(f.readline())
-        # except:
-        #     count=0
-        # 保存图片
         with open(basedir+bookname+'.jpg','wb')as f:
             f.write(imghtml.content)
         # 保存信息
@@ -65,6 +58,8 @@ def find_book(books):
 
         bookfilter = book.objects.filter(name=bookname)
         authorfilter=author_model.objects.filter(name=author)
+        # 当authorget=author_model.objects.create(name=author)时候，这个表就会被占用，
+        # 只能由authorget修改
         if not bookfilter:
             if not authorfilter:
                 # 存入作者
@@ -122,10 +117,8 @@ def find_book(books):
             book_list.save()
             bookget.count = str(count)
             bookget.save()
-        print('my')
         book_list.book_list = ','.join(url_index)
         book_list.save()
-        # print(count)
         bookget.count=str(count)
         bookget.save()
         # 存入当前的小说章节数目，作为下一次爬虫的起点
