@@ -94,7 +94,7 @@ def find_book(books):
         # 从上一次结束的章节作为起点开始爬
         # 增加try，防止中途连接出错等错误丢失count
         try:
-            for li in lists[count+9:13]:
+            for li in lists[count+9:]:
                 if not li in url_index:
                     time.sleep(0.5)
                     if len(url_index)<15:
@@ -125,11 +125,9 @@ def find_book(books):
         print('my')
         book_list.book_list = ','.join(url_index)
         book_list.save()
-        print(book_list.book_list)
         # print(count)
         bookget.count=str(count)
         bookget.save()
-        print(bookget.count)
         # 存入当前的小说章节数目，作为下一次爬虫的起点
         # with open(basedir + 'count.txt', 'w')as f1:
         #     f1.write(str(count))
