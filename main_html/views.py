@@ -1,7 +1,7 @@
 from django.shortcuts import render
 import os
 from .models import book,readed
-from django.http import HttpResponseRedirect
+from django.db.models import Q
 from main_html.tasks import findbook,add
 def main_view(req):
     username=None
@@ -12,11 +12,12 @@ def main_view(req):
         r = readed.objects.all().filter(reader=req.user)
     except:
         r = []
-    books = book.objects.all().order_by('?')[:9]
+    books = book.objects.all().order_by('readed_count')[:9]
+    # books=books50.order_by()[:9]
     # 增加模糊搜索功能，显示满足关键字的全部书
     search=req.GET.get('search')
     if (search!='')&(search is not None):
-        books = book.objects.all().filter(name__contains=search)
+        books = book.objects.all().filter(Q(name__contains=search)|Q(author__name__contains=search))
     if books.count() == 0:
         findbook.delay(search)
         # add.delay()

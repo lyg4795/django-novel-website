@@ -1,5 +1,5 @@
 from  django.utils.deprecation import MiddlewareMixin
-from main_html.models import readed
+from main_html.models import readed,book
 class ReadedMiddleware:
     def __init__(self,get_reponse):
         self.get_response=get_reponse
@@ -7,6 +7,8 @@ class ReadedMiddleware:
         if req.user.username!='':
             if '.txt' in req.path:
                 self.add_readed(req)
+                b=book.objects.all().filter(name__contains=req.path.split('/')[1])
+                b[0].update_readed_count()
         # print(req.session)
         res=self.get_response(req)
         return res

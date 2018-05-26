@@ -7,12 +7,16 @@ class author(models.Model):
 class book(models.Model):
     def __str__(self):
         return self.name
+    def update_readed_count(self):
+        self.readed_count+=1
+        self.save(update_fields=['readed_count'])
     name=models.CharField(max_length=20)
     author=models.ForeignKey(author,on_delete=models.CASCADE)
     describe=models.TextField()
     index=models.CharField(max_length=100)
     img=models.CharField(max_length=100,default='')
     count=models.CharField(max_length=20,default='0')
+    readed_count=models.IntegerField(default=0)
 class readed(models.Model):
     def __str__(self):
         return self.name
