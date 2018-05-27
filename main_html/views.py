@@ -12,7 +12,7 @@ def main_view(req):
         r = readed.objects.all().filter(reader=req.user)
     except:
         r = []
-    books = book.objects.all().order_by('readed_count')[:9]
+    books = book.objects.all().order_by('-readed_count')[:9]
     # books=books50.order_by()[:9]
     # 增加模糊搜索功能，显示满足关键字的全部书
     search=req.GET.get('search')
