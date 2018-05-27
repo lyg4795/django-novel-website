@@ -131,7 +131,7 @@ def find_book(books):
 def update_novel():
     books = book.objects.all()
     for b in books:
-       find_book(b.name)
+       find_book(b.bookurl)
 if __name__ == '__main__':
     # books=book.objects.all()
     # #for b in books:
