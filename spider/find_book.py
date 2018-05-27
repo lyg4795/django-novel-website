@@ -74,8 +74,10 @@ def find_book(books):
             print('saved {}'.format(bookname))
         else:
             bookget = bookfilter[0]
-
+        # 获取之前爬到哪了
         count=int(bookget.count)
+        # c存入书的网址
+        bookget.bookurl=req.url
         downloadfilter=download.objects.filter(name=bookget)
         if not downloadfilter:
             book_list = download.objects.create(name=bookget)
@@ -90,6 +92,7 @@ def find_book(books):
         # 增加try，防止中途连接出错等错误丢失count
         try:
             for li in lists[count+9:]:
+                # 防止书开头多出章节导致重复爬
                 if not li in url_index:
                     time.sleep(0.5)
                     if len(url_index)<15:

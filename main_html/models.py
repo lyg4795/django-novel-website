@@ -17,6 +17,7 @@ class book(models.Model):
     img=models.CharField(max_length=100,default='')
     count=models.CharField(max_length=20,default='0')
     readed_count=models.IntegerField(default=0)
+    bookurl=models.CharField(max_length=100,default='')
 class readed(models.Model):
     def __str__(self):
         return self.name
