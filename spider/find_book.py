@@ -15,6 +15,9 @@ from main_html.models import book,author as author_model,download
 
 
 def analyze(req):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
+    }
     detail = req.content.decode('gbk')
     # 用的是scrapy的选择器
     selector = scrapy.Selector(text=detail)
@@ -140,7 +143,7 @@ def update_novel():
 
 if __name__ == '__main__':
     # books=book.objects.all()
-    # #for b in books:
-    # #    find_book(b.name)
-    # find_book('永夜君王之姚轩传')
+    # for b in books:
+    #    find_book(b.name)
+    # find_book('魔鬼传奇')
     update_novel()
