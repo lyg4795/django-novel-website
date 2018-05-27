@@ -133,7 +133,8 @@ def update_novel():
     for b in books:
        find_book(b.name)
 if __name__ == '__main__':
-    books=book.objects.all()
-    #for b in books:
-    #    find_book(b.name)
-    find_book('永夜君王之姚轩传')
+    # books=book.objects.all()
+    # #for b in books:
+    # #    find_book(b.name)
+    # find_book('永夜君王之姚轩传')
+    update_novel()
