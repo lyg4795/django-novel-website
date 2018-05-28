@@ -4,13 +4,14 @@ class ReadedMiddleware:
     def __init__(self,get_reponse):
         self.get_response=get_reponse
     def __call__(self, req):
+
+        # print(req.session)
+        res=self.get_response(req)
         if req.user.username!='':
-            if '.txt' in req.path:
+            if ('.txt' in req.path)&(res.status_code==200):
                 self.add_readed(req)
                 b=book.objects.all().filter(name__contains=req.path.split('/')[1])
                 b[0].update_readed_count()
-        # print(req.session)
-        res=self.get_response(req)
         return res
     def add_readed(self,req):
         r=readed.objects.all()

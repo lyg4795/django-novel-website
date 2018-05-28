@@ -131,10 +131,18 @@ def find_book(books):
     req=requests.get(url,headers=headers)
     analyze(req)
 
-def update_novel():
+def update_novel(*bookname):
     headers = {
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
     }
+    temp=0
+    for b in bookname:
+        url=book.objects.get(name=b).bookurl
+        req=requests.get(url,headers=headers)
+        analyze(req)
+        temp+=1
+    if temp!=0:
+        return
     books = book.objects.all()
     for b in books:
         req=requests.get(b.bookurl,headers=headers)
@@ -142,8 +150,8 @@ def update_novel():
 
 
 if __name__ == '__main__':
-    # books=book.objects.all()
-    # for b in books:
-    #    find_book(b.name)
+    books=book.objects.all()
+    for b in books:
+       find_book(b.name)
     # find_book('魔鬼传奇')
-    update_novel()
+    # update_novel()

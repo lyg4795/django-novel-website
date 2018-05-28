@@ -9,7 +9,7 @@
 {#    <link rel="stylesheet" type="text/css" href={% static 'my/css/main.css' %}>#}
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="{% static 'my/css/delete_record.js' %}"></script>
+    <script src="{% static 'my/css/main_html.js' %}"></script>
 </head>
 <body>
 <div class="container">
@@ -64,6 +64,21 @@
     <br>
     <button id="delete">
         删除记录
+    </button>
+</div>
+<br>
+<div class="col-md-offset-10" id="to_update">
+    最新章节
+    {% for u in to_update %}
+        <div class="u" style="height: 20px">
+        <a href="{{ u }}">
+            {{ u   }}
+        </a>
+        </div>
+    {% endfor %}
+    <br>
+    <button id="update">
+        更新
     </button>
 </div>
 </body>

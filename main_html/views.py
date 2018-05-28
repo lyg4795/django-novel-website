@@ -3,6 +3,7 @@ import os
 from .models import book,readed
 from django.db.models import Q
 from main_html.tasks import findbook,add
+from spider.find_book import update_novel
 def main_view(req):
     username=None
     if req.user.username!=None:
@@ -22,10 +23,21 @@ def main_view(req):
         findbook.delay(search)
         # add.delay()
         return render(req, 'redirect.html', {'title': '书不存在', 'status': "正在通过爬虫获取，请稍后再试"})
+    # 更新用
+    try:
+        r = readed.objects.all().filter(reader=req.user)
+    except:
+        r = []
+    to_update=[]
+    for i in r:
+        bookget=book.objects.get(name=i.name.split('/')[1])
+        to_update.append('/{}/{}.txt'.format(i.name.split('/')[1],str(int(bookget.count)-1)))
+
     context={
         'books': books,
         'username': username,
-        'readed':r
+        'readed':r,
+        'to_update':to_update
     }
     return render(req,'main.html',context=context)
 def index(req,slug):
@@ -76,4 +88,18 @@ def delete_record(req):
         r = []
     r.delete()
     return render(req,'delete_record.html',{'readed':r})
+def update(req):
+    try:
+        r = readed.objects.all().filter(reader=req.user)
+    except:
+        r = []
+    to_update=[]
+
+    for i in r:
+        bookname = i.name.split('/')[1]
+        update_novel(bookname)
+        bookget=book.objects.get(name=bookname)
+        to_update.append('/{}/{}.txt'.format(bookname,str(int(bookget.count)-1)))
+    return render(req, 'update_novel.html', {'to_update': to_update})
+
 # Create your views here.
