@@ -10,7 +10,7 @@ $(document).ready(function () {
     $('#update').click(
         function () {
             $.get('/update_novel',function (data) {
-                $('#to_update').html(data)
+                $('#record').html(data)
             })
         }
     );

@@ -10,6 +10,21 @@
 
 </head>
 <body style="font-size:2rem">
+<div class="col-md-3 col-md-offset-5">
+    <a href="{{ above }}">
+        上一章
+    </a>
+    <a href="{{ index }}">
+        目录
+    </a>
+    <a href="{{ next }}">
+        下一章
+    </a>
+    <a href="/">
+        首页
+    </a>
+</div>
+
 <div class="col-md-11">
     {% for foo in content %}
         <p> {{ foo }}
@@ -17,7 +32,7 @@
 
 </div>
 <div class="clearfix"></div>
-<div class="col-md-2 col-md-offset-5">
+<div class="col-md-3 col-md-offset-5">
     <a href="{{ above }}">
         上一章
     </a>

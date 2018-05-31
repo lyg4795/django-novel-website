@@ -1,13 +1,19 @@
 
-    阅读记录
-    {% for r in readed %}
+     阅读记录
+    {% for r,u in new_sign %}
         <div class="r" style="height: 20px">
         <a href="{{ r.name }}">
             {{ r.name   }}
         </a>
+        {% if u == False %}
+        新
+        {% endif %}
         </div>
     {% endfor %}
     <br>
     <button id="delete">
         删除记录
+    </button>
+    <button id="update">
+        更新
     </button>

@@ -31,13 +31,16 @@ def main_view(req):
     to_update=[]
     for i in r:
         bookget=book.objects.get(name=i.name.split('/')[1])
-        to_update.append('/{}/{}.txt'.format(i.name.split('/')[1],str(int(bookget.count)-1)))
-
+        substraction=int(bookget.count)-1-int(i.name.split('/')[2].split('.')[0])
+        if substraction==0:
+            # to_update.append('/{}/{}.txt'.format(i.name.split('/')[1],str(int(bookget.count)-1)))
+            to_update.append(True)
+        else:
+            to_update.append(False)
     context={
         'books': books,
         'username': username,
-        'readed':r,
-        'to_update':to_update
+        'new_sign':zip(r,to_update)
     }
     return render(req,'main.html',context=context)
 def index(req,slug):
@@ -87,19 +90,22 @@ def delete_record(req):
     except:
         r = []
     r.delete()
-    return render(req,'delete_record.html',{'readed':r})
+    return render(req, 'record.html', {'readed':r})
 def update(req):
     try:
         r = readed.objects.all().filter(reader=req.user)
     except:
         r = []
     to_update=[]
-
     for i in r:
         bookname = i.name.split('/')[1]
         update_novel(bookname)
         bookget=book.objects.get(name=bookname)
-        to_update.append('/{}/{}.txt'.format(bookname,str(int(bookget.count)-1)))
-    return render(req, 'update_novel.html', {'to_update': to_update})
+        substraction = int(bookget.count) - 1 - int(i.name.split('/')[2].split('.')[0])
+        if substraction == 0:
+            to_update.append(True)
+        else:
+            to_update.append(False)
+    return render(req, 'record.html', {'new_sign': zip(r,to_update)})
 
 # Create your views here.
