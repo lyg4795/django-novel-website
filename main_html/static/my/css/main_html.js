@@ -19,12 +19,13 @@ $(document).ready(function () {
             $('form').ajaxSubmit({
                 url: '/deleteRecord/',
                 type:'post',
-                target:'#record',
+                // target:'#record',
                 data:check,
                 success: function (data) {
                     $('#record').html(data);
                 }
             });
+            return false
         }
     );
     $('#update').click(
