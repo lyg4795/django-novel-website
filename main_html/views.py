@@ -14,9 +14,6 @@ def main_view(req):
         r = readed.objects.all().filter(reader=req.user)
     except:
         r = []
-    delete_check = req.POST.getlist('delete_check')
-    for d_c in delete_check:
-        r.filter(name=d_c).delete()
 
     books = book.objects.all().order_by('-readed_count')[:9]
     # books=books50.order_by()[:9]
@@ -87,10 +84,19 @@ def delete_record(req):
         r = readed.objects.all().filter(reader=req.user)
     except:
         r = []
-    delete_check = req.POST.getlist('delete_check')
+    delete_check = req.POST.getlist('bookname[]')
     for d_c in delete_check:
         r.filter(name=d_c).delete()
-    return render(req, 'record.html', {'readed':r})
+    to_update = []
+    for i in r:
+        bookname = i.name.split('/')[1]
+        bookget = book.objects.get(name=bookname)
+        substraction = int(bookget.count) - 1 - int(i.name.split('/')[2].split('.')[0])
+        if substraction == 0:
+            to_update.append(True)
+        else:
+            to_update.append(False)
+    return render(req, 'record.html', {'new_sign': zip(r, to_update)})
 def update(req):
     try:
         r = readed.objects.all().filter(reader=req.user)

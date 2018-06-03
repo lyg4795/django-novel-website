@@ -1,17 +1,30 @@
 $(document).ready(function () {
     var options= {
-        url: '/deleteRecord/'
-        // success: function (data) {
-        //     $('#record').html(data);
-        // }
-        // target:'#record'
+        url: '/deleteRecord/',
+        type:'post',
+        success: function (data) {
+            $('#record').html(data);
+        },
+        target:'#record'
     };
     $('#record_form').submit(
+
         function () {
-            $('form').ajaxSubmit(options);
-            alert("aaa");
-            // return false;
-            // alert("aaa")
+            var check={'bookname':[]};
+            $('input:checkbox').each(function() {
+                if ($(this).prop('checked')) {
+                    check.bookname.push($(this).val());
+                }
+            });
+            $('form').ajaxSubmit({
+                url: '/deleteRecord/',
+                type:'post',
+                target:'#record',
+                data:check,
+                success: function (data) {
+                    $('#record').html(data);
+                }
+            });
         }
     );
     $('#update').click(
