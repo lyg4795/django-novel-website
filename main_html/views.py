@@ -8,11 +8,16 @@ def main_view(req):
     username=None
     if req.user.username!=None:
         username=req.user.username
+
     # 当没有登录时候会出错
     try:
         r = readed.objects.all().filter(reader=req.user)
     except:
         r = []
+    delete_check = req.POST.getlist('delete_check')
+    for d_c in delete_check:
+        r.filter(name=d_c).delete()
+
     books = book.objects.all().order_by('-readed_count')[:9]
     # books=books50.order_by()[:9]
     # 增加模糊搜索功能，显示满足关键字的全部书
@@ -24,10 +29,6 @@ def main_view(req):
         # add.delay()
         return render(req, 'redirect.html', {'title': '书不存在', 'status': "正在通过爬虫获取，请稍后再试"})
     # 更新用
-    try:
-        r = readed.objects.all().filter(reader=req.user)
-    except:
-        r = []
     to_update=[]
     for i in r:
         bookget=book.objects.get(name=i.name.split('/')[1])
@@ -81,15 +82,14 @@ def content(req,content,slug):
     }
     return render(req,'content.html',context=context)
 def delete_record(req):
-    username = None
-    if req.user.username != None:
-        username = req.user.username
     # 当没有登录时候会出错
     try:
         r = readed.objects.all().filter(reader=req.user)
     except:
         r = []
-    r.delete()
+    delete_check = req.POST.getlist('delete_check')
+    for d_c in delete_check:
+        r.filter(name=d_c).delete()
     return render(req, 'record.html', {'readed':r})
 def update(req):
     try:

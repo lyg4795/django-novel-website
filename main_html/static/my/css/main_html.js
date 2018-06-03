@@ -1,11 +1,18 @@
 $(document).ready(function () {
-    $('#delete').click(
+    var options= {
+        url: '/deleteRecord/'
+        // success: function (data) {
+        //     $('#record').html(data);
+        // }
+        // target:'#record'
+    };
+    $('#record_form').submit(
         function () {
-            $.get('/deleteRecord',function (data) {
-                $('#record').html(data);
-            });
+            $('form').ajaxSubmit(options);
+            alert("aaa");
+            // return false;
+            // alert("aaa")
         }
-        // alert("aaa")
     );
     $('#update').click(
         function () {
@@ -14,5 +21,9 @@ $(document).ready(function () {
             })
         }
     );
-});
-
+}
+);
+function sures()
+{
+return(confirm('确定继续？'));
+}
