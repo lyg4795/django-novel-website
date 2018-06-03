@@ -1,7 +1,9 @@
-
-     阅读记录
+<form method="post" id="record_form" onsubmit="return sures()">
+    {% csrf_token %}
+    阅读记录
     {% for r,u in new_sign %}
         <div class="r" style="height: 20px">
+        <input type="checkbox" value="{{ r.name }}" name="delete_check">
         <a href="{{ r.name }}">
             {{ r.name   }}
         </a>
@@ -11,9 +13,12 @@
         </div>
     {% endfor %}
     <br>
-    <button id="delete">
+    <button type="submit">
         删除记录
     </button>
+
+</form>
+    <br>
     <button id="update">
         更新
     </button>
